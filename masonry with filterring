@@ -1,0 +1,91 @@
+// jade 
+
+  .sort
+    .sort__pagin
+      .sort__btn.active(data-filter=".projects__item")
+        span Все работы
+      .sort__btn(data-filter=".shop") 
+        span Интернет-магазины
+      .sort__btn(data-filter=".landing") 
+        span Лендинги
+      .sort__btn(data-filter=".service") 
+        span Веб-сервисы
+      .sort__btn(data-filter=".app") 
+        span Мобильные приложения
+      .sort__btn(data-filter=".style") 
+        span Фирменный стиль
+        
+  .projects__wrap.clearfix
+    .projects__sizer
+    figure.projects__item._big.landing
+      img(src="images/project01.jpg", alt="project01")
+      figcaption.projects__info
+        .projects__name “MEDICENTER”
+        .projects__text сайт медицинского центра
+        .projects__btn 
+          a.btn.btn-primary(href="") ПОДРОБНЕЕ        
+    figure.projects__item.shop
+      img(src="images/project02.jpg", alt="project02")
+      figcaption.projects__info
+        .projects__name project02
+        .projects__text сайт project02
+        .projects__btn 
+          a.btn.btn-primary(href="") ПОДРОБНЕЕ 
+    figure.projects__item.shop
+      img(src="images/project03.jpg", alt="project03")
+      figcaption.projects__info
+        .projects__name project03
+        .projects__text сайт project03
+        .projects__btn 
+          a.btn.btn-primary(href="") ПОДРОБНЕЕ 
+    figure.projects__item.landing
+      img(src="images/project04.jpg", alt="project04")
+      figcaption.projects__info
+        .projects__name project04
+        .projects__text сайт project04
+        .projects__btn 
+          a.btn.btn-primary(href="") ПОДРОБНЕЕ 
+
+//js
+
+  if ($('.projects__wrap').length) {
+
+    var $projects = $(".projects__wrap");
+    
+    //masonry
+    
+    $projects.imagesLoaded(function() {
+      $projects.masonry({
+        itemSelector: ".projects__item",
+        columnWidth: ".projects__sizer",
+        percentPosition: true
+      });
+    });
+    
+    //filterring
+
+    $('.sort__btn').on('click', function() {
+      if (!$(this).hasClass('active')) {
+        $('.sort__btn').removeClass('active');
+        $(this).toggleClass('active');
+        $('.projects__item').show();
+        var filter = $(this).data('filter')
+        $('.projects__item').not(filter).hide();
+        $projects.masonry('layout');
+      }
+    })
+    
+    //more
+
+    $('.projects__btn .btn').on('click', function() {
+        $('.projects__item').show();
+        $projects.masonry('layout');
+    })    
+
+
+  }
+  
+  // library
+  
+  script(src="https://npmcdn.com/imagesloaded@4.1/imagesloaded.pkgd.min.js")
+  script(src="https://npmcdn.com/masonry-layout@4.1/dist/masonry.pkgd.min.js")     
